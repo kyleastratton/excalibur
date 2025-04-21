@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Converter</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/logo.svg" type="image/x-icon" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/logo.png">
+</head>
+<body>
+    <header>
+      <div id="navbar-container"></div>
+    </header>
+
+    <main>
+      <section class="page active fade-in">
+          <div class="center-card-container">
+            <div class="center-card">
+              <h3 class="margin-bottom">Case Converter</h3>
+                <div class="form-group">
+                    <label for="textInput">Text to convert</label>
+                    <input type="text" class="form-control" id="textInput" placeholder="Enter text to change casing">
+                </div>
+                
+                <div class="form-group">
+                    <label for="casingType">Casing</label>
+                    <select class="form-control" id="casingType">
+                        <option data-value="" disabled selected>Select a casing</option>
+                        <option data-value="title_case">Title Case</option>
+                        <option data-value="sentence">Sentence case</option>
+                        <option data-value="uppercase">UPPERCASE</option>
+                        <option data-value="lowercase">lowercase</option>
+                        <option data-value="alternating">aLtErNaTiNg cAsE</option>
+                        <option data-value="inverse">iNVERSE cASE</option>
+                        <option data-value="snake">snake_case</option>
+                        <option data-value="kebab">kebab-case</option>
+                        <option data-value="camel">camelCase</option>
+                        <option data-value="pascal">PascalCase</option>
+                        <option data-value="screaming_snake">SCREAMING_SNAKE_CASE</option>
+                        <option data-value="screaming_kebab">SCREAMING-KEBAB-CASE</option>
+                        <option data-value="train">Train-Case</option>
+                    </select>
+                </div>
+                <p class="subtext">Casing will default to 'Title Case' if no option selected.</p>
+                
+                <button class="btn" id="btn" onclick="convertText()">Convert</button>
+
+                <div
+                  id="result"
+                  class="result-box"
+                  style="display: none"
+                  onclick="copyToClipboard('result')"
+                />
+            </div>
+        </div>
+      </section>
+      <div id="snackbar" class="snackbar">Text copied to clipboard!</div>
+    </main>
+
+
+    <div id="footer-container"></div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Comparison</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/logo.svg" type="image/x-icon" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/logo.png">
+</head>
+<body>
+    <header>
+      <div id="navbar-container"></div>
+    </header>
+
+    <main>
+      <section class="page active fade-in">
+          <div class="center-card-container">
+            <div class="center-card">
+              <h3 class="margin-bottom">List Comparison</h3>
+                <div class="form-group">
+                    <label for="list1">List 1</label>
+                    <textarea class="form-control" id="list1" placeholder="Please insert a list (comma-separated)..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="list2">List 2</label>
+                    <textarea class="form-control" id="list2" placeholder="Please insert a list (comma-separated)..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="comparisonType">Select Comparison</label>
+                    <select class="form-control" id="comparisonType">
+                        <option value="" disabled selected>Select a category</option>
+                        <option data-value="differences">Differences</option>
+                        <option data-value="matches">Matches</option>
+                    </select>
+                </div>
+                <p class="subtext">Comparison will default to differences if no comparison option selected.</p>
+                
+                <button class="btn" id="btn" onclick="compareLists()">Generate</button>
+
+                <div
+                    id="result"
+                    class="result-box"
+                    style="display: none"
+                    onclick="copyToClipboard('result')"
+                />
+            </div>
+        </div>
+      </section>
+      <div id="snackbar" class="snackbar">Text copied to clipboard!</div>
+    </main>
+
+
+    <div id="footer-container"></div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

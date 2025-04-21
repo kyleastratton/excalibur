@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/logo.svg" type="image/x-icon" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/logo.png">
+</head>
+<body>
+    <header>
+      <div id="navbar-container"></div>
+    </header>
+
+    <main>
+          <section class="page fade-in">
+              <h1>Contact Us</h1>
+              <div class="center-card-container">
+                  <div class="center-card">
+                      <!-- <h2 class="card-header">Registration Form</h2> -->
+                      <h3 class="sub-header">Please provide your details</h3>
+                      <!-- <p class="subtext">Fill out the form below to get started with our service.</p> -->
+                      
+                      <div class="form-group">
+                          <label for="username">Your Name</label>
+                          <input type="text" class="form-control" id="username" placeholder="Enter your username">
+                      </div>
+                      
+                      <div class="form-group">
+                          <label for="age">Age</label>
+                          <input type="number" class="form-control" id="age" min="18" max="120" placeholder="Enter your age">
+                      </div>
+                      
+                      <div class="form-group">
+                          <label for="category">Category</label>
+                          <select class="form-control" id="category">
+                              <option value="" disabled selected>Select a category</option>
+                              <option value="general_query">General Query</option>
+                              <option value="registration">Registration</option>
+                              <option value="service">Particular Service</option>
+                              <option value="finance">Finance</option>
+                          </select>
+                      </div>
+                      
+                      <div class="form-group">
+                          <label for="message">Additional Information</label>
+                          <textarea class="form-control" id="message" placeholder="Tell us more about yours query..."></textarea>
+                      </div>
+                      
+                      <button class="btn" id="register-btn">Register</button>
+                  </div>
+              </div>
+          </section>
+      </main>
+
+    <div id="footer-container"></div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

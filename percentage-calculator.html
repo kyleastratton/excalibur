@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Percentage Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/logo.svg" type="image/x-icon" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/logo.png">
+</head>
+<body>
+    <header>
+      <div id="navbar-container"></div>
+    </header>
+
+    <main>
+      <section id="percentage-section-1" class="page active fade-in class=">
+          <h1>Percentage Calculator</h1>
+          <div class="center-card-container">
+            <div class="center-card">
+                <h3 class="margin-bottom">Percentage of a value</h3>
+                <div class="form-group">
+                    <label for="value1">Value</label>
+                    <input type="number" min="0" class="form-control" id="value1" placeholder="Please enter a value">
+                </div>
+
+                <div class="form-group">
+                    <label for="percentage1">Percentage (%)</label>
+                    <input type="number" min="0" class="form-control" id="percentage1" placeholder="Please enter a percentage">
+                </div>
+                
+                <button class="btn" id="btn" onclick="calculatePercentageOfValue()">Generate</button>
+
+                <div
+                    id="result1"
+                    class="result-box"
+                    style="display: none"
+                    onclick="copyToClipboard('result')"
+                />
+            </div>
+        </div>
+      </section>
+
+      <section id="percentage-section-2" class="page active fade-in class=">
+        <div class="center-card-container">
+          <div class="center-card">
+            <h3 class="margin-bottom">Value ± Percentage</h3>
+            <div class="form-group">
+                <label for="value2">Value</label>
+                <input type="number" min="0" class="form-control" id="value2" placeholder="Please enter a value">
+            </div>
+
+            <div class="form-group">
+                <label for="percentage2">Percentage (%)</label>
+                <input type="number" min="0" class="form-control" id="percentage2" placeholder="Please enter a percentage">
+            </div>
+            
+            <button class="btn" id="btn" onclick="calculateValuePlusPercentage()">Calculate Value + Percentage</button>
+            <br>
+            <br>
+            <button class="btn" id="btn" onclick="calculateValueMinusPercentage()">Calculate Value - Percentage</button>
+
+            <div
+                id="result2"
+                class="result-box"
+                style="display: none"
+                onclick="copyToClipboard('result')"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section id="percentage-section-3" class="page active fade-in">
+          <div class="center-card-container">
+            <div class="center-card">
+                <h3 class="margin-bottom">A is what percentage of B?</h3>
+                <div class="form-group">
+                    <label for="valueA">Value A</label>
+                    <input type="number" min="0" class="form-control" id="valueA" placeholder="Please value of A">
+                </div>
+
+                <div class="form-group">
+                    <label for="valueB">Value B</label>
+                    <input type="number" min="0" class="form-control" id="valueB" placeholder="Please enter value of B">
+                </div>
+                
+                <button class="btn" id="btn" onclick="calculatePercentageOf()">Generate</button>
+
+                <div
+                    id="result3"
+                    class="result-box"
+                    style="display: none"
+                    onclick="copyToClipboard('result')"
+                />
+            </div>
+        </div>
+      </section>
+      <div id="snackbar" class="snackbar">Text copied to clipboard!</div>
+    </main>
+
+
+    <div id="footer-container"></div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

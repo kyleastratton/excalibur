@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String Replacer</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/logo.svg" type="image/x-icon" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/logo.png">
+</head>
+<body>
+    <header>
+      <div id="navbar-container"></div>
+    </header>
+
+    <main>
+      <section class="page active fade-in">
+          <div class="center-card-container">
+            <div class="center-card">
+              <h3 class="margin-bottom">String Replacer</h3>
+              <div class="form-group">
+                  <label for="stringInput">Input String</label>
+                  <textarea class="form-control" id="stringInput" placeholder="Please enter your string here..."></textarea>
+              </div>
+
+              <div class="form-group">
+                  <label for="findValue">Find</label>
+                  <input type="text" class="form-control" id="findValue" placeholder="Please enter a value to find here...">
+              </div>
+
+              <div class="form-group">
+                  <label for="replaceValue">Replace With</label>
+                  <input type="text" class="form-control" id="replaceValue" placeholder="Please enter value to replace here...">
+              </div>
+                
+                <button class="btn" id="replaceBtn" onclick="replaceString()">Generate</button>
+
+                <div
+                    id="result"
+                    class="result-box"
+                    style="display: none"
+                    onclick="copyToClipboard('result')"
+                />
+            </div>
+        </div>
+      </section>
+      <div id="snackbar" class="snackbar">Text copied to clipboard!</div>
+    </main>
+
+
+    <div id="footer-container"></div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

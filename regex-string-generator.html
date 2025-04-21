@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regex String Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/logo.svg" type="image/x-icon" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/logo.png">
+</head>
+<body>
+    <header>
+      <div id="navbar-container"></div>
+    </header>
+
+    <main>
+      <section class="page active fade-in">
+          <div class="center-card-container">
+            <div class="center-card">
+              <h3 class="margin-bottom">Regex String Generator</h3>
+              <div class="form-group">
+                <label for="regexInput">Regex Expression</label>
+                <input type="text" class="form-control" id="regexInput" placeholder="Enter regex ([0-9]{3})" value="[0-9]{3}">
+              </div>
+                
+              <button class="btn" id="btn" onclick="generateStrings()">Generate</button>
+
+              <div
+                  id="result"
+                  class="result-box"
+                  style="display: none"
+                  onclick="copyToClipboard('result')"
+              />
+            </div>
+        </div>
+      </section>
+      <div id="snackbar" class="snackbar">Text copied to clipboard!</div>
+    </main>
+
+
+    <div id="footer-container"></div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
