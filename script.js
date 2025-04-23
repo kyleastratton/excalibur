@@ -326,30 +326,12 @@ function parseList(input) {
 function compareLists() {
   let list1 = parseList(document.getElementById("list1").value);
   let list2 = parseList(document.getElementById("list2").value);
-  let comparisonType = selected;
+  const comparisonType =
+    document.getElementById("comparisonType").value || "differences";
+  const caseSensitive = document.getElementById("caseSensitive")?.checked;
+  const sortResults = document.getElementById("sortResults")?.checked;
 
-  if (comparisonType === null) {
-    let comparisonType = "differences";
-  }
-
-  let set1 = new Set(list1);
-  let set2 = new Set(list2);
-  let result;
-
-  if (comparisonType === "differences") {
-    let diff1 = list1.filter((item) => !set2.has(item));
-    let diff2 = list2.filter((item) => !set1.has(item));
-    result = [...new Set([...diff1, ...diff2])];
-  }
-  if (comparisonType === "matches") {
-    result = list1.filter((item) => set2.has(item));
-  } else {
-    let diff1 = list1.filter((item) => !set2.has(item));
-    let diff2 = list2.filter((item) => !set1.has(item));
-    result = [...new Set([...diff1, ...diff2])];
-  }
-
-  if (list1.length === 0) {
+  if (list1.length === 0 || list2.length === 0) {
     updateResult(
       "result",
       "Error: Please make sure a list has been added to List 1 and List 2.",
@@ -358,12 +340,73 @@ function compareLists() {
     return;
   }
 
-  if (result.length === 0) {
-    updateResult("result", "Error: No results found.", true);
-    return;
+  if (!caseSensitive) {
+    list1 = list1.map((item) => item.toLowerCase());
+    list2 = list2.map((item) => item.toLowerCase());
   }
 
-  updateResult("result", `${result.join(", ")}`);
+  const set1 = new Set(list1);
+  const set2 = new Set(list2);
+
+  let resultText = "";
+
+  if (comparisonType === "matches") {
+    const matches = list1.filter((item) => set2.has(item));
+    const uniqueMatches = [...new Set(matches)];
+    if (uniqueMatches.length === 0) {
+      resultText = "There are no items that appear in both lists.";
+    } else {
+      if (sortResults) uniqueMatches.sort();
+      resultText = `These items appear in both lists: ${formatList(
+        uniqueMatches
+      )}.`;
+    }
+  } else {
+    const onlyInList1 = list1.filter((item) => !set2.has(item));
+    const onlyInList2 = list2.filter((item) => !set1.has(item));
+
+    const unique1 = [...new Set(onlyInList1)];
+    const unique2 = [...new Set(onlyInList2)];
+
+    if (sortResults) {
+      unique1.sort();
+      unique2.sort();
+    }
+
+    if (unique1.length === 0 && unique2.length === 0) {
+      resultText = "The lists are identical.";
+    } else {
+      let parts = [];
+      if (unique1.length > 0) {
+        parts.push(
+          `${formatList(unique1)} ${
+            unique1.length > 1 ? "are" : "is"
+          } only in List 1`
+        );
+      }
+      if (unique2.length > 0) {
+        parts.push(
+          `${formatList(unique2)} ${
+            unique2.length > 1 ? "are" : "is"
+          } only in List 2`
+        );
+      }
+      resultText = parts.join("; ") + ".";
+    }
+  }
+
+  updateResult("result", resultText);
+}
+
+function formatList(arr) {
+  if (arr.length === 1) return `"${arr[0]}"`;
+  if (arr.length === 2) return `"${arr[0]}" and "${arr[1]}"`;
+  return (
+    arr
+      .slice(0, -1)
+      .map((i) => `"${i}"`)
+      .join(", ") + `, and "${arr[arr.length - 1]}"`
+  );
 }
 
 function toTitleCase(str) {

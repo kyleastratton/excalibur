@@ -34,11 +34,17 @@
                     <label for="comparisonType">Select Comparison</label>
                     <select class="form-control" id="comparisonType">
                         <option value="" disabled selected>Select a category</option>
-                        <option data-value="differences">Differences</option>
-                        <option data-value="matches">Matches</option>
+                        <option value="differences" data-value="differences">Differences</option>
+                        <option value="matches" data-value="matches">Matches</option>
                     </select>
                 </div>
                 <p class="subtext">Comparison will default to differences if no comparison option selected.</p>
+                <div class="form-group">
+                  <input type="checkbox" id="caseSensitive">
+                  <label for="caseSensitive">Case Sensitive</label><br>
+                  <input type="checkbox" id="sortResults">
+                  <label for="sortResults">Sort Results</label>
+                </div>
                 
                 <button class="btn" id="btn" onclick="compareLists()">Generate</button>
 
