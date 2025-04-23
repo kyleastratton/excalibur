@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Converter</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/logo.svg" type="image/x-icon" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/logo.png">
+</head>
+<body>
+  <script>
+      document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById('generateBtn').addEventListener('click', () => {
+        const randomColor = generateRandomHexColor();
+        document.getElementById('colorSample').style.backgroundColor = randomColor;
+        document.getElementById('colorCode').textContent = randomColor;
+        addToHistory(randomColor);
+      });
+      function generateRandomHexColor() {
+        return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+      }
+
+      function addToHistory(color) {
+        const historyContainer = document.getElementById('historyContainer');
+
+        const item = document.createElement('div');
+        item.classList.add('historyItem');
+
+        const colorBox = document.createElement('div');
+        colorBox.classList.add('historyColorBox');
+        colorBox.style.backgroundColor = color;
+
+        const colorLabel = document.createElement('span');
+        colorLabel.textContent = color;
+
+        item.appendChild(colorBox);
+        item.appendChild(colorLabel);
+        historyContainer.prepend(item);
+      }
+    })
+  </script>
+    <header>
+      <div id="navbar-container"></div>
+    </header>
+
+    <main>
+      <section class="page active fade-in">
+        <div class="center-card-container">
+          <div class="center-card">
+            <h1>Random Hex Color Generator</h1>
+            <div id="colorDisplay">
+              <div id="colorSample"></div>
+              <p id="colorCode">#0d6efd</p>
+            </div>
+            <button class="btn" id="generateBtn">Generate Color</button>
+            <section id="history">
+              <h2>Color History</h2>
+              <div id="historyContainer"></div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

@@ -116,6 +116,10 @@ h1 {
   color: var(--text-primary);
 }
 
+span {
+  color: var(--text-primary);
+}
+
 .margin-bottom {
   margin-bottom: 1.5rem;
 }
@@ -297,6 +301,42 @@ textarea.form-control {
   margin-top: -1.3rem;
   margin-bottom: 1.5rem;
   font-size: 0.9rem;
+}
+
+/* Hex color page */
+#colorSample {
+  width: 100px;
+  height: 100px;
+  border: 1px solid #000;
+  margin-top: 10px;
+  background-color: #0d6efd;
+}
+
+#historyContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.historyItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70px;
+  padding: 0.5rem;
+  border: 1px solid var(--bg-primary);
+  border-radius: 0.5rem;
+  font-size: 12px;
+  text-align: center;
+  background-color: var(--bg-primary);
+}
+
+.historyColorBox {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
 }
 
 /* Footer */
