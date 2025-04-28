@@ -2162,8 +2162,12 @@ function generateRandomNumber() {
     number = Math.floor(Math.random() * (max - min + 1)) + min;
     result.push(number);
   }
-  console.log(result);
 
-  updateResult("result", `${result.join(", ")}`);
+  // Sort smallest to largest
+  result = result.sort((a, b) => a - b);
+  // Add space after delimiter
+  result = result.join(", ");
+
+  updateResult("result", `${result}`);
   document.getElementById("result").setAttribute("data-copy", result);
 }
