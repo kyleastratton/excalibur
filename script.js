@@ -2112,15 +2112,16 @@ function replaceString() {
 }
 
 //! Random number logic
-
 function generateRandomNumber() {
   // Get values from input fields
   const minInput = document.getElementById("minNum");
   const maxInput = document.getElementById("maxNum");
+  const numOfNums = document.getElementById("numOfNums");
 
   // Convert to numbers and ensure they're valid
   const min = Number(minInput.value);
   const max = Number(maxInput.value);
+  const num = Number(numOfNums.value);
 
   const isMinNull = !min || min === 0;
   const isMaxNull = !min || min === 0;
@@ -2154,11 +2155,15 @@ function generateRandomNumber() {
     return;
   }
 
-  // Generate random number between min and max (inclusive)
-  const result = Math.floor(Math.random() * (max - min + 1)) + min;
+  let result = [];
+  for (i = 0; i < num; i++) {
+    console.log("test");
+    // Generate random number between min and max (inclusive)
+    number = Math.floor(Math.random() * (max - min + 1)) + min;
+    result.push(number);
+  }
+  console.log(result);
 
-  // Display the result
-  // document.getElementById('result').textContent = randomNumber;
-  updateResult("result", `${result}`);
+  updateResult("result", `${result.join(", ")}`);
   document.getElementById("result").setAttribute("data-copy", result);
 }
