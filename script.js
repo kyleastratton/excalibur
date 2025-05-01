@@ -2171,3 +2171,107 @@ function generateRandomNumber() {
   updateResult("result", `${result}`);
   document.getElementById("result").setAttribute("data-copy", result);
 }
+
+// ! Password logic
+
+// Character sets
+const lowercase = "abcdefghijklmnopqrstuvwxyz";
+const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const numbers = "0123456789";
+const symbols = "!@#$%^&*()_+[]{}|;:,.<>?";
+const similarChars = /[0OIl1]/g;
+
+function getRandomChar(str) {
+  const array = new Uint32Array(1);
+  crypto.getRandomValues(array);
+  return str[array[0] % str.length];
+}
+
+function generatePassword() {
+  const lengthInput = document.getElementById("length");
+  const includeLowercase = document.getElementById("includeLowercase");
+  const includeUppercase = document.getElementById("includeUppercase");
+  const includeNumbers = document.getElementById("includeNumbers");
+  const includeSymbols = document.getElementById("includeSymbols");
+  const excludeSimilar = document.getElementById("excludeSimilar");
+
+  let charset = "";
+  if (includeLowercase.checked) charset += lowercase;
+  if (includeUppercase.checked) charset += uppercase;
+  if (includeNumbers.checked) charset += numbers;
+  if (includeSymbols.checked) charset += symbols;
+
+  if (excludeSimilar.checked) charset = charset.replace(similarChars, "");
+
+  const length = parseInt(lengthInput.value);
+  if (!charset) {
+    updateResult("result", "Error: Select at least one option!", true);
+    return;
+  }
+
+  let password = "";
+  for (let i = 0; i < length; i++) {
+    password += getRandomChar(charset);
+  }
+
+  updateResult("result", `${password}`);
+  updateStrength(password);
+  saveSettings();
+}
+
+function updateStrength(password) {
+  const strengthLabel = document.getElementById("strengthLabel");
+  const uniqueChars = new Set(password).size;
+  const length = password.length;
+
+  let score = 0;
+  if (length >= 12) score++;
+  if (/[a-z]/.test(password)) score++;
+  if (/[A-Z]/.test(password)) score++;
+  if (/\d/.test(password)) score++;
+  if (/[^a-zA-Z0-9]/.test(password)) score++;
+  if (uniqueChars > length * 0.6) score++;
+
+  const labels = ["Very Weak", "Weak", "Moderate", "Strong", "Very Strong"];
+  strengthLabel.textContent = labels[Math.min(score - 1, 4)];
+}
+
+// Save/load settings
+function saveSettings() {
+  const lengthInput = document.getElementById("length");
+  const includeLowercase = document.getElementById("includeLowercase");
+  const includeUppercase = document.getElementById("includeUppercase");
+  const includeNumbers = document.getElementById("includeNumbers");
+  const includeSymbols = document.getElementById("includeSymbols");
+  const excludeSimilar = document.getElementById("excludeSimilar");
+  const settings = {
+    length: lengthInput.value,
+    lower: includeLowercase.checked,
+    upper: includeUppercase.checked,
+    numbers: includeNumbers.checked,
+    symbols: includeSymbols.checked,
+    exclude: excludeSimilar.checked,
+  };
+  localStorage.setItem("pwgenSettings", JSON.stringify(settings));
+}
+
+function loadSettings() {
+  const lengthInput = document.getElementById("length");
+  const includeLowercase = document.getElementById("includeLowercase");
+  const includeUppercase = document.getElementById("includeUppercase");
+  const includeNumbers = document.getElementById("includeNumbers");
+  const includeSymbols = document.getElementById("includeSymbols");
+  const excludeSimilar = document.getElementById("excludeSimilar");
+  const settings = JSON.parse(localStorage.getItem("pwgenSettings"));
+  if (settings) {
+    lengthInput.value = settings.length;
+    includeLowercase.checked = settings.lower;
+    includeUppercase.checked = settings.upper;
+    includeNumbers.checked = settings.numbers;
+    includeSymbols.checked = settings.symbols;
+    excludeSimilar.checked = settings.exclude;
+  }
+}
+
+loadSettings();
+generatePassword(); // generate on load
