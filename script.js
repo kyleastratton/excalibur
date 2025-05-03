@@ -20393,7 +20393,7 @@ function lookupBank() {
   } else {
     updateResult(
       "result",
-      "Error: No bank found for sort code: ${input}.",
+      `Error: No bank found for sort code: ${input}.`,
       true
     );
   }
