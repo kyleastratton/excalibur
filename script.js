@@ -20384,7 +20384,6 @@ function lookupBank() {
     991095: "BNP PARIBAS",
     991096: "BNP PARIBAS",
     991097: "BNP PARIBAS",
-    "Sort Code": "Bank Name",
   };
   const input = document.getElementById("sortCodeInput").value;
   const normalized = normalizeSortCode(input);
