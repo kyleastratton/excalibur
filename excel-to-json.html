@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel/CSV to JSON</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/logo.svg" type="image/x-icon" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/logo.png">
+</head>
+<body>
+    <header>
+      <div id="navbar-container"></div>
+    </header>
+
+    <main>
+      <section class="page active fade-in">
+          <div class="center-card-container">
+            <div class="center-card">
+                <h3 class="margin-bottom">Excel/CSV to JSON</h3>
+                <label class="drop-area" id="dropArea">
+                  <strong>Drop Excel/CSV file here</strong><br>
+                  <!-- <span>or click to select</span> -->
+                </label>
+                <input type="file" id="excelFileInput" accept=".csv,.xlsx" />
+            
+                <div class="options">
+                  <label><input type="radio" name="mode" value="array" checked /> Array of Objects (using headers)</label>
+                  <label><input type="radio" name="mode" value="keyvalue" /> Single Object (key-value from two columns)</label>
+                </div>
+            
+                <textarea class="form-control" id="jsonOutput" placeholder="JSON output will appear here..."></textarea>
+            
+                <div class="buttons">
+                  <button class="btn" onclick="copyToClipboard()">Copy JSON</button>
+                  <button class="btn" onclick="downloadJSON()">Download JSON</button>
+                </div>
+            </div>
+        </div>
+      </section>
+      <div id="snackbar" class="snackbar">Text copied to clipboard!</div>
+    </main>
+
+
+    <div id="footer-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script>
+      const excelFileInput = document.getElementById('excelFileInput');
+      const output = document.getElementById('jsonOutput');
+      const dropArea = document.getElementById('dropArea');
+
+      dropArea.addEventListener('click', () => {
+        excelFileInput.click();
+      });
+
+      // Core parse function
+      function handleFile(file) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          const data = new Uint8Array(event.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const sheet = workbook.Sheets[workbook.SheetNames[0]];
+          const mode = document.querySelector('input[name="mode"]:checked').value;
+
+          let json;
+          if (mode === 'array') {
+            json = XLSX.utils.sheet_to_json(sheet);
+          } else {
+            const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+            json = {};
+            rows.forEach(row => {
+              if (row.length >= 2) json[row[0]] = row[1];
+            });
+          }
+
+          output.value = JSON.stringify(json, null, 2);
+        };
+        reader.readAsArrayBuffer(file);
+      }
+
+      // Click-select fallback
+      excelFileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) handleFile(file);
+      });
+
+      // Drag-and-drop behavior
+      dropArea.addEventListener('click', () => excelFileInput.click());
+      ['dragenter', 'dragover'].forEach(event => {
+        dropArea.addEventListener(event, e => {
+          e.preventDefault();
+          dropArea.classList.add('dragover');
+        });
+      });
+      ['dragleave', 'drop'].forEach(event => {
+        dropArea.addEventListener(event, e => {
+          e.preventDefault();
+          dropArea.classList.remove('dragover');
+        });
+      });
+
+      dropArea.addEventListener('drop', e => {
+        const file = e.dataTransfer.files[0];
+        if (file) handleFile(file);
+      });
+
+      // Utility functions
+      function copyToClipboard() {
+        output.select();
+        document.execCommand("copy");
+        alert("JSON copied to clipboard!");
+      }
+
+      function downloadJSON() {
+        const blob = new Blob([output.value], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "converted.json";
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

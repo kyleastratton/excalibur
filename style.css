@@ -417,3 +417,40 @@ footer {
 .fade-in {
   animation: fadeIn 0.3s ease-in-out;
 }
+
+/* Excel to JSON */
+.drop-area {
+  border: 2px dashed #007acc;
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: center;
+  color: #007acc;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-bottom: 1rem;
+  user-select: none;
+  position: static;
+  float: left;
+  width: 100%;
+}
+
+.drop-area.dragover {
+  background-color: #e6f2fc;
+}
+
+input[type="file"] {
+  display: none; /* Fully hidden input now */
+}
+
+.options {
+  margin-bottom: 1rem;
+  position: relative;
+  width: 100%;
+  position: static;
+  float: right;
+}
+
+.options label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
