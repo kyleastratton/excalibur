@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colour Visualiser</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/logo.svg" type="image/x-icon" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/logo.png">
+</head>
+<body>
+  <script>
+
+  </script>
+    <header>
+      <div id="navbar-container"></div>
+    </header>
+
+    <main>
+      <section class="page active fade-in">
+          <h1>Colour Visualiser</h1>
+          <canvas id="color-wheel" width="300" height="300"></canvas>
+          <div class="color-display" id="color-display"></div>
+          <div id="info">
+            <div class="code"><span class="color-type">HEX : </span><input class="color-code" id="hex" /> <button class="copy" data-copy="hex">Copy</button></div>
+            <div class="code"><span class="color-type">RGB : </span><input class="color-code" id="rgb" /> <button class="copy" data-copy="rgb">Copy</button></div>
+            <div class="code"><span class="color-type">RGBA: </span><input class="color-code" id="rgba" /> <button class="copy" data-copy="rgba">Copy</button></div>
+            <div class="code"><span class="color-type">HSL : </span><input class="color-code" id="hsl" /> <button class="copy" data-copy="hsl">Copy</button></div>
+            <div style="margin-top: 1rem;">
+              <strong>Related Colors:</strong><br>
+              <span class="color-sample" id="complementary"></span>
+              <span class="color-sample" id="triadic1"></span>
+              <span class="color-sample" id="triadic2"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="script.js" defer></script>
+    <script>
+    const canvas = document.getElementById("color-wheel");
+    const ctx = canvas.getContext("2d");
+    const radius = canvas.width / 2;
+    const toRad = (deg) => (deg * Math.PI) / 180;
+
+    for (let angle = 0; angle < 360; angle++) {
+      const grad = ctx.createRadialGradient(radius, radius, 0, radius, radius, radius);
+      grad.addColorStop(0, `hsl(${angle}, 0%, 100%)`);
+      grad.addColorStop(1, `hsl(${angle}, 100%, 50%)`);
+      ctx.beginPath();
+      ctx.moveTo(radius, radius);
+      ctx.arc(radius, radius, radius, toRad(angle), toRad(angle + 1));
+      ctx.closePath();
+      ctx.fillStyle = grad;
+      ctx.fill();
+    }
+
+    function rgbToHex(r, g, b) {
+      return "#" + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join("");
+    }
+
+    function rgbToHsl(r, g, b) {
+      r /= 255; g /= 255; b /= 255;
+      const max = Math.max(r, g, b), min = Math.min(r, g, b);
+      let h, s, l = (max + min) / 2;
+      if (max === min) { h = s = 0; }
+      else {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch(max){
+          case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+          case g: h = (b - r) / d + 2; break;
+          case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+      }
+      return `hsl(${Math.round(h*360)}, ${Math.round(s*100)}%, ${Math.round(l*100)}%)`;
+    }
+
+    function updateInfo(x, y) {
+      const data = ctx.getImageData(x, y, 1, 1).data;
+      const [r, g, b, a] = data;
+      const hex = rgbToHex(r, g, b);
+      const rgb = `rgb(${r}, ${g}, ${b})`;
+      const rgba = `rgba(${r}, ${g}, ${b}, ${a / 255})`;
+      const hsl = rgbToHsl(r, g, b);
+
+      document.getElementById("hex").value = hex;
+      document.getElementById("rgb").value = rgb;
+      document.getElementById("rgba").value = rgba;
+      document.getElementById("hsl").value = hsl;
+      document.getElementById("color-display").style.backgroundColor = hex;
+
+      const h = hsl.match(/\d+/)[0];
+      document.getElementById("complementary").style.backgroundColor = `hsl(${(Number(h)+180)%360}, 100%, 50%)`;
+      document.getElementById("triadic1").style.backgroundColor = `hsl(${(Number(h)+120)%360}, 100%, 50%)`;
+      document.getElementById("triadic2").style.backgroundColor = `hsl(${(Number(h)+240)%360}, 100%, 50%)`;
+    }
+
+    canvas.addEventListener("click", (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      updateInfo(x, y);
+    });
+
+    document.querySelectorAll(".copy").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const type = btn.dataset.copy;
+        const text = document.getElementById(type).value;
+        navigator.clipboard.writeText(text);
+        btn.textContent = "Copied!";
+        setTimeout(() => btn.textContent = "Copy", 1000);
+      });
+    });
+
+    ["hex", "rgb", "hsl", "rgba"].forEach(id => {
+      document.getElementById(id).addEventListener("change", e => {
+        const color = e.target.value;
+        document.getElementById("color-display").style.backgroundColor = color;
+        const temp = document.createElement("div");
+        temp.style.color = color;
+        document.body.appendChild(temp);
+        const computed = getComputedStyle(temp).color;
+        document.body.removeChild(temp);
+        const match = computed.match(/\d+/g);
+        if (match && match.length >= 3) {
+          updateInfoFromRGB(+match[0], +match[1], +match[2]);
+        }
+      });
+    });
+
+    function updateInfoFromRGB(r, g, b) {
+      const hex = rgbToHex(r, g, b);
+      const rgb = `rgb(${r}, ${g}, ${b})`;
+      const rgba = `rgba(${r}, ${g}, ${b}, 1)`;
+      const hsl = rgbToHsl(r, g, b);
+
+      document.getElementById("hex").value = hex;
+      document.getElementById("rgb").value = rgb;
+      document.getElementById("rgba").value = rgba;
+      document.getElementById("hsl").value = hsl;
+      document.getElementById("color-display").style.backgroundColor = hex;
+
+      const h = hsl.match(/\d+/)[0];
+      document.getElementById("complementary").style.backgroundColor = `hsl(${(Number(h)+180)%360}, 100%, 50%)`;
+      document.getElementById("triadic1").style.backgroundColor = `hsl(${(Number(h)+120)%360}, 100%, 50%)`;
+      document.getElementById("triadic2").style.backgroundColor = `hsl(${(Number(h)+240)%360}, 100%, 50%)`;
+    }
+  </script>
+</body>
+</html>
