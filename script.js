@@ -7,7 +7,7 @@ const navbarHTML = `
       <div class="nav-links">
           <!-- <a href="index.html" class="nav-link active">Home</a> -->
           <a href="index.html" class="nav-link">Home</a>
-          <a href="#" class="nav-link">Tools</a>
+          <!-- <a href="#" class="nav-link">Tools</a> -->
           <a href="about-us.html" class="nav-link">About Us</a>
           <a href="contact-us.html" class="nav-link">Contact Us</a>
       </div>
