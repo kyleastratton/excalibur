@@ -28,8 +28,8 @@
   /* --accent-hover: #3d8bfd; */
   --accent-hover: #01579B;
   --border: #2d3236;
-  --shadow: rgba(255, 255, 255, 0.05);
-  --input-bg: #2d3236;
+  /* --shadow: rgba(255, 255, 255, 0.05); */
+  --input-bg: #1e1e2f;
   /* --header-bg: #1e1e1e;
   --footer-bg: #121212; */
   --header-bg: #2a3144;
