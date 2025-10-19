@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         });
 
         if (!searchInput) {
-            console.error("Search input not found!");
+            console.log("Search input not found!");
             return;
         }
 
@@ -19258,3 +19258,272 @@ function lookupBank() {
         updateResult("result", `Error: No bank found for sort code: ${input}.`, true);
     }
 }
+
+// Land Reg Generator
+
+function generateCSV(rowCount = 10, col6Array = []) {
+    const col2Options = [
+        "BR",
+        "CV",
+        "CR",
+        "DM",
+        "GL",
+        "HL",
+        "HQ",
+        "LL",
+        "FY",
+        "LT",
+        "NE",
+        "PB",
+        "PH",
+        "TF",
+        "WA",
+        "WY",
+    ];
+    const col4Options = [
+        // Search fees
+        "BG LC SEARCH (ELEC)",
+        "BG OC1 REG OR PLAN (ELEC)",
+        "BG OC2 DOCS REF TO (ELEC)",
+        "BG OS1 WHOLE PRIORITY (ELEC)",
+        "HC1 HISTORIC REG OR PLAN",
+        "IOPN SEARCH",
+        "LC OFFICE COPY",
+        "LC SEARCH",
+        "LCD Postal Search",
+        "LR OC2 MIXED DOCS",
+        "OC2 DOCS NOT REF TO",
+        "OC2 DOCS REF TO",
+        "OC2 MIXED DOCS",
+        "Portal Register View",
+        "Portal Title Plan View",
+        "PRTL DOC VIEW",
+        "PRTL HRM HOME RIGHTS SEARCH",
+        "PRTL LC OFFICE COPY",
+        "PRTL LC REGISTRATION VIEW",
+        "PRTL LC SEARCH (ELEC)",
+        "PRTL LOCAL LAND CHARGE SEARCH",
+        "PRTL OC1 REG OR PLAN (ELEC)",
+        "PRTL OC2 DOCS NOT REF TO",
+        "PRTL OC2 DOCS NOT REF TO (Elec)",
+        "PRTL OC2 DOCS REF TO (ELEC)",
+        "PRTL OS1 WHOLE PRIORITY (ELEC)",
+        "PRTL OS2 PART WITH PRIORITY",
+        "PRTL OS3 W/O PRIORITY (ELEC)",
+        "PRTL SIF FRANCHISE SEARCH",
+        "SIM INDEX MAP SEARCH",
+        // Registration fees
+        "BG EDRS DEALING OF WHOLE",
+        "BG EDRS DISPOSITIONARY FIRST LEASE",
+        "BG EDRS TRANSFER OF PART",
+        "DEALING OF WHOLE",
+        "DISP. FIRST LEASE",
+        "FIRST REGISTRATION",
+        "LCD Registration",
+        "PRTL EDRS DEALING OF WHOLE",
+        "PRTL EDRS DISPOSITIONARY FIRST LEASE",
+        "PRTL EDRS TRANSFER OF PART",
+        "PRTL HC1 PLAN",
+        "PRTL HC1 REGISTER",
+        "TRANSFER OF PART",
+        // Unknown fees
+        // "Returned VDD payment",
+    ];
+
+    const randomChoice = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    const randomLetters = (len) =>
+        Array.from({ length: len }, () => String.fromCharCode(65 + Math.floor(Math.random() * 26))).join("");
+    const randomNumbers = (len) => Array.from({ length: len }, () => Math.floor(Math.random() * 10)).join("");
+
+    const formatDate = (date) => {
+        const day = String(date.getDate()).padStart(2, "0");
+        const month = date.toLocaleString("en-GB", { month: "short" }).toUpperCase();
+        const year = String(date.getFullYear()).slice(-2);
+        return `${day}-${month}-${year}`;
+    };
+
+    const getPreviousWorkingDay = () => {
+        const date = new Date();
+        const day = date.getDay();
+        if (day === 0) date.setDate(date.getDate() - 2); // Sunday → Friday
+        else if (day === 1) date.setDate(date.getDate() - 3); // Monday → Friday
+        else date.setDate(date.getDate() - 1);
+        return date;
+    };
+
+    const dateStr = formatDate(getPreviousWorkingDay());
+    const rows = [];
+
+    for (let i = 0; i < rowCount; i++) {
+        const col1 = dateStr;
+        const col2 = randomChoice(col2Options);
+        const col3 = randomLetters(2) + randomNumbers(5);
+        const col4 = randomChoice(col4Options);
+        const col5 = randomNumbers(10) + "/" + randomLetters(1) + randomNumbers(3) + randomLetters(3);
+        const col6 = randomChoice(col6Array);
+        const col7 = "Correct";
+        const col8 = (Math.random() * (100 - 7) + 7).toFixed(2);
+        const col9 = "GBP";
+        const col10 = "DOEJ1";
+
+        rows.push(`${col1},${col2},${col3},${col4},${col5},"${col6}",${col7},${col8},${col9},${col10}`);
+    }
+
+    return rows.join("\n");
+}
+
+function generateAndShowCSV() {
+    const presets = {
+        leap: [
+            "DOE01-01",
+            "DOE01-02",
+            "AND01-01",
+            "BAI01-01",
+            "BAT01-01",
+            "BAR01-01",
+            "BAR02-01",
+            "BEN01-01",
+            "BER01-01",
+            "BIR01-01",
+            "BIR02-01",
+            "BLA01-01",
+        ],
+        clio_eu: ["DOE01-01", "DOE01-02", "EVANC01-01", "JUNIR01-01"],
+        clio_us: [
+            "00001",
+            "00002",
+            "00003",
+            "00004",
+            "00005",
+            "00006",
+            "00007",
+            "00008",
+            "00009",
+            "00010",
+            "00011",
+            "00012",
+        ],
+    };
+
+    const select = document.getElementById("col6Select");
+    let selectedOption = select.options[select.selectedIndex];
+    const dataValue = selectedOption.getAttribute("data-value");
+    console.log(dataValue);
+
+    const rowCount = parseInt(document.getElementById("rowCount").value, 10);
+    const col6Array = presets[dataValue] || presets["leap"];
+
+    const csv = generateCSV(rowCount, col6Array);
+    updateResult("result", csv);
+}
+
+function copyToClipboard(selectorId) {
+    const textToCopy = document.getElementById(selectorId).innerText;
+    if (textToCopy) {
+        navigator.clipboard
+            .writeText(textToCopy)
+            .then(() => {
+                showSnackbar();
+            })
+            .catch((err) => {
+                console.error("Failed to copy: ", err);
+            });
+    }
+}
+
+function showSnackbar() {
+    console.log("Show snackbar");
+    const snackbar = document.getElementById("snackbar");
+    snackbar.classList.add("show");
+
+    // Hide snackbar after 3 seconds
+    setTimeout(() => {
+        snackbar.classList.remove("show");
+    }, 3000);
+}
+
+generateAndShowCSV(50);
+
+//! Array parser
+
+document.addEventListener("DOMContentLoaded", () => {
+    const inputArray = document.getElementById("inputArray");
+    const conditionKey = document.getElementById("conditionKey");
+    const conditionOperator = document.getElementById("conditionOperator");
+    const conditionValue = document.getElementById("conditionValue");
+    const returnKey = document.getElementById("returnKey");
+    const filterBtn = document.getElementById("filterBtn");
+    const result = document.getElementById("result");
+    const resultCount = document.getElementById("resultCount");
+
+    // Populate dropdowns with object keys
+    function populateKeys() {
+        try {
+            const cleanJSON = inputArray.value.replace(/[\uFEFF\x0B\f\r]/g, "").trim();
+            const arr = JSON.parse(cleanJSON);
+            if (!Array.isArray(arr) || arr.length === 0) return;
+
+            const keys = Object.keys(arr[0]);
+            const options = keys.map((k) => `<option value="${k}">${k}</option>`).join("");
+            conditionKey.innerHTML = options;
+            returnKey.innerHTML = options;
+        } catch (err) {
+            // silently ignore invalid JSON
+        }
+    }
+
+    inputArray.addEventListener("input", populateKeys);
+    document.addEventListener("DOMContentLoaded", populateKeys);
+
+    // Handle filtering
+    filterBtn.addEventListener("click", () => {
+        try {
+            const arr = JSON.parse(inputArray.value.replace(/[\uFEFF\x0B\f\r]/g, "").trim());
+            const key = conditionKey.value;
+            const op = conditionOperator.value;
+            const compareRaw = conditionValue.value.trim();
+            const returnProp = returnKey.value;
+
+            // Parse comparison value (try boolean, number, else string)
+            let val = compareRaw;
+            if (val === "true") val = true;
+            else if (val === "false") val = false;
+            else if (!isNaN(val)) val = Number(val);
+
+            // Perform filtering
+            const filtered = arr.filter((obj) => {
+                const v = obj[key];
+                switch (op) {
+                    case "==":
+                        return v == val;
+                    case "!=":
+                        return v != val;
+                    case ">":
+                        return v > val;
+                    case "<":
+                        return v < val;
+                    case ">=":
+                        return v >= val;
+                    case "<=":
+                        return v <= val;
+                    case "contains":
+                        return String(v).toLowerCase().includes(String(val).toLowerCase());
+                    default:
+                        return false;
+                }
+            });
+
+            // Collect results
+            const returnVals = filtered.map((obj) => obj[returnProp]);
+            if (returnVals.length) {
+                resultCount.textContent = `Results: ${returnVals.length}`;
+                result.textContent = returnVals.join(", ");
+            } else {
+                resultCount.textContent = "";
+                result.textContent = "No results found.";
+            }
+        } catch (err) {
+            result.textContent = "⚠️ Invalid JSON input.";
+        }
+    });
+});

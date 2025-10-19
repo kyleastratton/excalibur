@@ -133,6 +133,12 @@ h1 {
 span {
     color: var(--text-primary);
 }
+
+a {
+    color: inherit;
+    display: inline;
+}
+
 .margin-top {
     margin-top: 1.5rem;
 }
@@ -260,7 +266,7 @@ span {
     padding: 2rem;
     border: 1px solid var(--border);
     width: 100%;
-    max-width: 500px;
+    max-width: 80vw;
 }
 
 /* Form Elements */
@@ -280,7 +286,8 @@ span {
     padding: 0.75rem;
     border: 1px solid var(--border);
     border-radius: 4px;
-    background-color: var(--input-bg);
+    /* background-color: var(--input-bg); */
+    background-color: var(--bg-primary);
     color: var(--text-primary);
     font-size: 1rem;
     margin-bottom: 1.5rem;

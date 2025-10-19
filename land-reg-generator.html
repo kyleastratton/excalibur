@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Land Reg Data Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/logo.svg" type="image/x-icon" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/logo.png">
+</head>
+<body>
+    <header>
+      <div id="navbar-container"></div>
+    </header>
+
+    <main>
+      <section class="page active fade-in">
+          <div class="center-card-container">
+            <div class="center-card">
+              <h3 class="margin-bottom">Land Reg Generator</h3>
+                <div class="form-group">
+                  <label for="maxNum">How many rows to generate?</label>
+                  <input
+                      type="number"
+                      min="1"
+                      class="form-control"
+                      id="rowCount"
+                      placeholder="Please enter a number"
+                      value="50"
+                  />
+              </div>
+                
+                <div class="form-group">
+                    <label for="col6Select">Matter List</label>
+                    <select class="form-control" id="col6Select">
+                        <option data-value="" disabled selected>Select a matter list</option>
+                        <option data-value="leap">LEAP</option>
+                        <option data-value="clio_us">Clio US</option>
+                        <option data-value="clio_uk">Clio EU</option>
+                    </select>
+                </div>
+                <p class="subtext">Matter list will default to 'LEAP' if no option selected.</p>
+                
+                <button class="btn" id="btn" onclick="generateAndShowCSV()">Convert</button>
+
+                <div
+                  id="result"
+                  class="result-box"
+                  style="display: none"
+                  onclick="copyToClipboard('result')"
+                />
+            </div>
+        </div>
+      </section>
+      <div id="snackbar" class="snackbar">Text copied to clipboard!</div>
+    </main>
+
+
+    <div id="footer-container"></div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

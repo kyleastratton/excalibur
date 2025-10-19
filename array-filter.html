@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Array Filter</title>
+        <link rel="stylesheet" href="style.css" />
+        <link rel="icon" href="assets/logo.svg" type="image/x-icon" />
+        <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="assets/logo.png" />
+    </head>
+    <body>
+        <header>
+            <div id="navbar-container"></div>
+        </header>
+
+        <main>
+            <section class="page active fade-in">
+                <div class="center-card-container">
+                    <div class="center-card">
+                        <h3 class="margin-bottom">Array Filter</h3>
+                        <div class="form-group">
+                            <label for="inputArray">Array</label>
+                            <!-- <textarea class="form-control"
+                            id="inputArray" id="inputArray">[{"name":"John Doe","age":25,"isActive":true},{"name":"Jane Doe","age":31,"isActive":true},{"name":"Jessica Doe","age":42,"isActive":false}]</textarea> -->
+                            <textarea id="inputArray" rows="7" class="form-control">[
+                                { "name": "John Doe", "age": 20, "isActive": true },
+                                { "name": "Jane Doe", "age": 22, "isActive": true },
+                                { "name": "Jessica Doe", "age": 35, "isActive": false }
+                              ]</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="conditionKey">Property</label>
+                            <select class="form-control" id="conditionKey"></select>
+
+                            <label for="conditionOperator">Conditional Operator</label>
+                            <select class="form-control" id="conditionOperator">
+                                <option value="" disabled selected></option>
+                                <option value="==">==</option>
+                                <option value="!=">!=</option>
+                                <option value=">">&gt;</option>
+                                <option value="<">&lt;</option>
+                                <option value=">=">&gt;=</option>
+                                <option value="<=">&lt;=</option>
+                                <option value="contains">contains</option>
+                            </select>
+                            </select>
+                            
+                            <label for="conditionValue">Conditional Value</label>
+                            <input class="form-control" type="text" id="conditionValue" placeholder="Value to compare" />
+
+                            <label for="returnKey">Return Key</label>
+                            <select class="form-control" id="returnKey"></select>
+
+                            <button class="btn" id="filterBtn">Filter</button>
+                        </div>
+
+                        <div id="result" class="result"></div>
+                        <div id="resultCount"></div>
+                    </div>
+                </div>
+            </section>
+            <div id="snackbar" class="snackbar">Text copied to clipboard!</div>
+        </main>
+
+        <div id="footer-container"></div>
+
+        <script src="script.js" defer></script>
+    </body>
+</html>
