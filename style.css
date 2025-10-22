@@ -266,6 +266,16 @@ a {
     padding: 2rem;
     border: 1px solid var(--border);
     width: 100%;
+    max-width: 500px;
+}
+
+.center-card-large {
+    background-color: var(--bg-secondary);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px var(--shadow);
+    padding: 2rem;
+    border: 1px solid var(--border);
+    width: 100%;
     max-width: 80vw;
 }
 

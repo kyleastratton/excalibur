@@ -18,7 +18,7 @@
     <main>
       <section class="page active fade-in">
           <div class="center-card-container">
-            <div class="center-card">
+            <div class="center-card-large">
               <h3 class="margin-bottom">Land Reg Generator</h3>
                 <div class="form-group">
                   <label for="maxNum">How many rows to generate?</label>
@@ -46,10 +46,9 @@
                 <button class="btn" id="btn" onclick="generateAndShowCSV()">Convert</button>
 
                 <div
-                  id="result"
+                  id="results"
                   class="result-box"
-                  style="display: none"
-                  onclick="copyToClipboard('result')"
+                  onclick="copyToClipboard('results')"
                 />
             </div>
         </div>

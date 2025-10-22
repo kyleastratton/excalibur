@@ -590,11 +590,8 @@ function convertText() {
 }
 
 function copyToClipboard(selectorId) {
-    console.log("Hello, World!");
-    // const textToCopy = document.getElementById(selectorId).getAttribute("data-copy");
     const textToCopy = document.getElementById(selectorId).innerHTML;
     if (textToCopy) {
-        console.log("test");
         navigator.clipboard
             .writeText(textToCopy)
             .then(() => {
@@ -1235,7 +1232,6 @@ function generateRandomNumber() {
 
     let result = [];
     for (i = 0; i < num; i++) {
-        console.log("test");
         // Generate random number between min and max (inclusive)
         number = Math.floor(Math.random() * (max - min + 1)) + min;
         result.push(number);
@@ -19473,7 +19469,6 @@ function lookupBank() {
 }
 
 // Land Reg Generator
-
 function generateCSV(rowCount = 10, col6Array = []) {
     const col2Options = [
         "BR",
@@ -19600,6 +19595,17 @@ function generateAndShowCSV() {
             "BIR01-01",
             "BIR02-01",
             "BLA01-01",
+            "BLA01-02",
+            "BOO01-01",
+            "BOS02-01",
+            "BRA01-01",
+            "BUC01-01",
+            "CAM01-01",
+            "CLE01-01",
+            "COS01-01",
+            "COS01-02",
+            "CRA01-01",
+            "CUR01-01"
         ],
         clio_eu: ["DOE01-01", "DOE01-02", "EVANC01-01", "JUNIR01-01"],
         clio_us: [
@@ -19621,13 +19627,14 @@ function generateAndShowCSV() {
     const select = document.getElementById("col6Select");
     let selectedOption = select.options[select.selectedIndex];
     const dataValue = selectedOption.getAttribute("data-value");
-    console.log(dataValue);
 
     const rowCount = parseInt(document.getElementById("rowCount").value, 10);
     const col6Array = presets[dataValue] || presets["leap"];
 
     const csv = generateCSV(rowCount, col6Array);
-    updateResult("result", csv);
+    const htmlString = csv.replace(/\n/g, "<br>");
+    const resultField = document.getElementById("results");
+    resultField.innerHTML = htmlString;
 }
 
 function copyToClipboard(selectorId) {
@@ -19658,7 +19665,6 @@ function showSnackbar() {
 generateAndShowCSV(50);
 
 //! Array parser
-
 document.addEventListener("DOMContentLoaded", () => {
     const inputArray = document.getElementById("inputArray");
     const conditionKey = document.getElementById("conditionKey");
