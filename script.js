@@ -19661,7 +19661,8 @@ function generateCSV(rowCount = 10, col6Array = []) {
 function generateAndShowCSV() {
   const presets = {
     leap: [
-      "DOE01-01",
+      "",
+      "AP/DOE01-01",
       "DOE01-02",
       "AND01-01",
       "BAI01-01",
@@ -19685,9 +19686,10 @@ function generateAndShowCSV() {
       "CRA01-01",
       "CUR01-01",
     ],
-    clio_eu: ["DOE01-01", "DOE01-02", "EVANC01-01", "JUNIR01-01"],
+    clio_eu: ["", "AP/DOE01-01", "DOE01-02", "EVANC01-01", "JUNIR01-01"],
     clio_us: [
-      "00001",
+      "",
+      "AP/00001",
       "00002",
       "00003",
       "00004",
