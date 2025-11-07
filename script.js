@@ -19812,6 +19812,7 @@ function generateAndShowCSV() {
       "00011",
       "00012",
     ],
+    actionstep: ["496", 433", "432", "431", "430"],
   };
 
   const select = document.getElementById("col6Select");
