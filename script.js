@@ -19758,7 +19758,8 @@ function generateCSV(rowCount = 10, col6Array = []) {
     const col7 = "Correct";
     const col8 = (Math.random() * (100 - 7) + 7).toFixed(2);
     const col9 = "GBP";
-    const col10 = "DOEJ1";
+    const col10Array = ["DOEJ1", "JOHNSMITH", ""];
+    const col10 = randomChoice(col10Array);
 
     rows.push(
       `${col1},${col2},${col3},${col4},${col5},"${col6}",${col7},${col8},${col9},${col10}`
