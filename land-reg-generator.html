@@ -42,14 +42,27 @@
                         <option data-value="actionstep">Actionstep</option>
                     </select>
                 </div>
-                <p class="subtext">Matter list will default to 'LEAP' if no option selected.</p>
+                <p class="subtext">Matter list will default to "LEAP" if no option selected.</p>
+
+                <div class="form-group">
+                  <label for="filePrefix">Choose a file name prefix</label>
+                  <input
+                      type="text"
+                      class="form-control"
+                      id="filePrefix"
+                      placeholder="Please enter a prefix"
+                      value="ABC"
+                  />
+              </div>
+              <p class="subtext">Prefix will default to "ABC" if not overridden.</p>
                 
                 <button class="btn" id="btn" onclick="generateAndShowCSV()">Generate</button>
                 <button class="btn" onclick="downloadCSV()">Download CSV</button>
 
                 <div
-                  id="results"
+                  id="result"
                   class="result-box"
+                  style="display: none"
                   onclick="copyToClipboard('results')"
                 />
             </div>

@@ -420,7 +420,8 @@ function updateResult(resultId, value, isError = false) {
 
   if (!resultBox) return; // Safety check
 
-  resultBox.textContent = value;
+  //   resultBox.textContent = value;
+  resultBox.innerHTML = value;
   resultBox.style.display = "inline-block"; // Show result
 
   // Reset error class first, then apply conditionally
@@ -19645,6 +19646,12 @@ function lookupBank() {
 }
 
 // Land Reg Generator
+function randomWithOccasionalNegative() {
+  const isNegative = Math.random() < 1 / 25; // 1 in 25 chance
+  const value = (Math.random() * (100 - 7) + 7).toFixed(2);
+  return isNegative ? -value : +value; // convert to number, flip sign if needed
+}
+
 function generateCSV(rowCount = 10, col6Array = []) {
   const col2Options = [
     "BR",
@@ -19756,9 +19763,10 @@ function generateCSV(rowCount = 10, col6Array = []) {
       randomLetters(3);
     const col6 = randomChoice(col6Array);
     const col7 = "Correct";
-    const col8 = (Math.random() * (100 - 7) + 7).toFixed(2);
+    // const col8 = (Math.random() * (100 - 7) + 7).toFixed(2);
+    const col8 = randomWithOccasionalNegative();
     const col9 = "GBP";
-    const col10Array = ["DOEJ1", "JOHNSMITH", ""];
+    const col10Array = ["DOEJ1", "JOHNSMITH", "ADMIN", ""];
     const col10 = randomChoice(col10Array);
 
     rows.push(
@@ -20007,8 +20015,7 @@ function generateAndShowCSV() {
 
   const csv = generateCSV(rowCount, col6Array);
   const htmlString = csv.replace(/\n/g, "<br>");
-  const resultField = document.getElementById("results");
-  resultField.innerHTML = htmlString;
+  updateResult("result", htmlString);
 }
 
 function copyToClipboard(selectorId) {
@@ -20039,7 +20046,7 @@ function showSnackbar() {
 generateAndShowCSV(50);
 
 function downloadCSV() {
-  const csvContent = document.getElementById("results").innerText;
+  const csvContent = document.getElementById("result").innerText;
   if (!csvContent.trim()) {
     alert("Please generate the CSV first!");
     return;
@@ -20055,7 +20062,9 @@ function downloadCSV() {
   const minutes = String(date.getMinutes()).padStart(2, "0");
 
   const timestamp = `${year}${month}${day}-${hours}${minutes}`;
-  const filename = `ABC - VDD0000001_receipt_txns_${timestamp}.csv`;
+
+  const prefix = document.querySelector("#filePrefix").value;
+  const filename = `${prefix} - VDD0000001_receipt_txns_${timestamp}.csv`;
 
   // Create a Blob and trigger download
   const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
