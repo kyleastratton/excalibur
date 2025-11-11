@@ -19652,6 +19652,62 @@ function randomWithOccasionalNegative() {
   return isNegative ? -value : +value; // convert to number, flip sign if needed
 }
 
+function checkType(col4) {
+  let searches = [
+    "BG LC SEARCH (ELEC)",
+    "BG OC1 REG OR PLAN (ELEC)",
+    "BG OC2 DOCS REF TO (ELEC)",
+    "BG OS1 WHOLE PRIORITY (ELEC)",
+    "HC1 HISTORIC REG OR PLAN",
+    "IOPN SEARCH",
+    "LC OFFICE COPY",
+    "LC SEARCH",
+    "LCD Postal Search",
+    "LR OC2 MIXED DOCS",
+    "OC2 DOCS NOT REF TO",
+    "OC2 DOCS REF TO",
+    "OC2 MIXED DOCS",
+    "Portal Register View",
+    "Portal Title Plan View",
+    "PRTL DOC VIEW",
+    "PRTL HRM HOME RIGHTS SEARCH",
+    "PRTL LC OFFICE COPY",
+    "PRTL LC REGISTRATION VIEW",
+    "PRTL LC SEARCH (ELEC)",
+    "PRTL LOCAL LAND CHARGE SEARCH",
+    "PRTL OC1 REG OR PLAN (ELEC)",
+    "PRTL OC2 DOCS NOT REF TO",
+    "PRTL OC2 DOCS NOT REF TO (Elec)",
+    "PRTL OC2 DOCS REF TO (ELEC)",
+    "PRTL OS1 WHOLE PRIORITY (ELEC)",
+    "PRTL OS2 PART WITH PRIORITY",
+    "PRTL OS3 W/O PRIORITY (ELEC)",
+    "PRTL SIF FRANCHISE SEARCH",
+    "SIM INDEX MAP SEARCH",
+  ];
+  let registrations = [
+    "BG EDRS DEALING OF WHOLE",
+    "BG EDRS DISPOSITIONARY FIRST LEASE",
+    "BG EDRS TRANSFER OF PART",
+    "DEALING OF WHOLE",
+    "DISP. FIRST LEASE",
+    "FIRST REGISTRATION",
+    "LCD Registration",
+    "PRTL EDRS DEALING OF WHOLE",
+    "PRTL EDRS DISPOSITIONARY FIRST LEASE",
+    "PRTL EDRS TRANSFER OF PART",
+    "PRTL HC1 PLAN",
+    "PRTL HC1 REGISTER",
+    "TRANSFER OF PART",
+  ];
+  if (searches.includes(col4)) {
+    return "SRCH/";
+  }
+  if (registrations.includes(col4)) {
+    return "REG/";
+  }
+}
+
 function generateCSV(rowCount = 10, col6Array = []) {
   const col2Options = [
     "BR",
@@ -19761,7 +19817,7 @@ function generateCSV(rowCount = 10, col6Array = []) {
       randomLetters(1) +
       randomNumbers(3) +
       randomLetters(3);
-    const col6 = randomChoice(col6Array);
+    const col6 = `${checkType(col4)}${randomChoice(col6Array)}`;
     const col7 = "Correct";
     // const col8 = (Math.random() * (100 - 7) + 7).toFixed(2);
     const col8 = randomWithOccasionalNegative();
@@ -19781,7 +19837,7 @@ function generateAndShowCSV() {
   const presets = {
     leap: [
       "",
-      "AP/SU/AAA01-01",
+      "SU/AAA01-01",
       "BIR01-01",
       "BIR02-01",
       "BLA01-01",
@@ -19897,10 +19953,10 @@ function generateAndShowCSV() {
       "WIL01-01",
       "XYZ01-01",
     ],
-    clio_eu: ["", "AP/DOE01-01", "DOE01-02", "EVANC01-01", "JUNIR01-01"],
+    clio_eu: ["", "DOE01-01", "DOE01-02", "EVANC01-01", "JUNIR01-01"],
     clio_us: [
       "",
-      "AP/00001",
+      "00001",
       "00002",
       "00003",
       "00004",
