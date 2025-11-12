@@ -19652,6 +19652,20 @@ function randomWithOccasionalNegative() {
   return isNegative ? -value : +value; // convert to number, flip sign if needed
 }
 
+function randomWithOccasionalNoTitle() {
+  const randomLetters = (len) =>
+    Array.from({ length: len }, () =>
+      String.fromCharCode(65 + Math.floor(Math.random() * 26))
+    ).join("");
+  const randomNumbers = (len) =>
+    Array.from({ length: len }, () => Math.floor(Math.random() * 10)).join("");
+
+  const isNoTitle = Math.random() < 1 / 25; // Odds of 1 in 25 of generating "No Title"
+
+  const value = randomLetters(2) + randomNumbers(5);
+  return isNoTitle ? "No Title" : value;
+}
+
 function checkType(col4) {
   let searches = [
     "BG LC SEARCH (ELEC)",
@@ -19809,7 +19823,8 @@ function generateCSV(rowCount = 10, col6Array = []) {
   for (let i = 0; i < rowCount; i++) {
     const col1 = dateStr;
     const col2 = randomChoice(col2Options);
-    const col3 = randomLetters(2) + randomNumbers(5);
+    // const col3 = randomLetters(2) + randomNumbers(5);
+    const col3 = randomWithOccasionalNoTitle();
     const col4 = randomChoice(col4Options);
     const col5 =
       randomNumbers(10) +
@@ -19820,7 +19835,7 @@ function generateCSV(rowCount = 10, col6Array = []) {
     const col6 = `${checkType(col4)}${randomChoice(col6Array)}`;
     const col7 = "Correct";
     // const col8 = (Math.random() * (100 - 7) + 7).toFixed(2);
-    const col8 = randomWithOccasionalNegative();
+    const col8 = randomWithOccasionalNegative(randomNumbers(), randomLetters());
     const col9 = "GBP";
     const col10Array = ["DOEJ1", "JOHNSMITH", "ADMIN", ""];
     const col10 = randomChoice(col10Array);
