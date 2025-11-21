@@ -74,7 +74,7 @@ nav {
 }
 
 .logo {
-    font-size: 1.5rem;
+    font-size: 6px;
     font-weight: bold;
     color: var(--accent);
     text-decoration: none;
@@ -159,10 +159,10 @@ a {
 .result-box {
     background-color: var(--bg-primary);
     margin-top: 2rem;
-    padding: 10px;
-    text-align: center;
-    border-left: solid 20px var(--color-success);
-    border-radius: 5px;
+    padding: 14px 18px;
+    /* text-align: center; */
+    border-top: solid 20px var(--color-success);
+    border-radius: 6px;
     display: inline-block;
     min-width: 150px;
     width: 100%;
@@ -170,7 +170,7 @@ a {
 
 .result-box.error {
     background-color: var(--bg-primary);
-    border-left: solid 20px var(--color-error);
+    border-top: solid 20px var(--color-error);
 }
 
 /* Snackbar */
@@ -184,7 +184,7 @@ a {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    border-radius: 8px;
+    border-radius: 6px;
     opacity: 0;
     transition: opacity 0.5s, visibility 0.5s;
 }
@@ -203,7 +203,7 @@ a {
 
 .card {
     background-color: var(--bg-secondary);
-    border-radius: 8px;
+    border-radius: 6px;
     box-shadow: 0 4px 6px var(--shadow);
     padding: 1.5rem;
     border: 1px solid var(--border);
@@ -237,11 +237,11 @@ a {
 }
 
 .btn {
-    padding: 0.5rem 1rem;
+    padding: 0.6em 1.2em;
     background-color: var(--accent);
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 1rem;
     transition: background-color 0.2s;
@@ -261,7 +261,7 @@ a {
 
 .center-card {
     background-color: var(--bg-secondary);
-    border-radius: 8px;
+    border-radius: 6px;
     box-shadow: 0 4px 10px var(--shadow);
     padding: 2rem;
     border: 1px solid var(--border);
@@ -271,7 +271,7 @@ a {
 
 .center-card-large {
     background-color: var(--bg-secondary);
-    border-radius: 8px;
+    border-radius: 6px;
     box-shadow: 0 4px 10px var(--shadow);
     padding: 2rem;
     border: 1px solid var(--border);
@@ -295,7 +295,7 @@ a {
     width: 100%;
     padding: 0.75rem;
     border: 1px solid var(--border);
-    border-radius: 4px;
+    border-radius: 6px;
     /* background-color: var(--input-bg); */
     background-color: var(--bg-primary);
     color: var(--text-primary);
@@ -360,7 +360,7 @@ textarea.form-control {
     width: 70px;
     padding: 0.5rem;
     border: 1px solid var(--bg-primary);
-    border-radius: 0.5rem;
+    border-radius: 6px;
     font-size: 12px;
     text-align: center;
     background-color: var(--bg-primary);
@@ -537,7 +537,7 @@ input.color-code {
     padding: 0.3rem;
     width: 200px;
     min-width: fit-content;
-    border-radius: 5px;
+    border-radius: 6px;
     border: 1px solid #aaa;
 }
 
